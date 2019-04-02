@@ -1,0 +1,21 @@
+{
+  "name": "cqrs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mssql": "^5.0.5",
+    "tedious": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/mssql": "^4.0.13",
+    "@types/tedious": "^3.0.0"
+  }
+}
