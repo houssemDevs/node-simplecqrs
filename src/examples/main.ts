@@ -1,9 +1,10 @@
-import { TdsQueryHandler } from '../sql/tedious/queryhandler';
+import { Transform } from 'stream';
+
+import { TdsQueryHandler } from '../sql/tedious/tdsqueryhandler';
 import { Affaire } from './affaire';
 import { AffaireTdsDataMapper } from './affairedm';
 import { GetAffaireSqlQuery } from './affaireqo';
-import { SqlCriteria } from '../sql/criteria';
-import { Transform } from 'stream';
+import { SqlCriteria } from '../sql/sqlcriteria';
 
 const affaire = new TdsQueryHandler<Affaire>(
   {

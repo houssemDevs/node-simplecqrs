@@ -1,7 +1,7 @@
 import { ColumnValue } from 'tedious';
 
 import { Affaire } from './affaire';
-import { ITdsDataMapper } from '../sql/tedious/datamapper';
+import { ITdsDataMapper } from '../sql/tedious/tdsdatamapper';
 
 export class AffaireTdsDataMapper implements ITdsDataMapper<Affaire> {
   toDomain(s: ColumnValue[]): Affaire {

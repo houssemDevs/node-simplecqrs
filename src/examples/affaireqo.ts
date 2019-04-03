@@ -1,4 +1,4 @@
-import { SqlQuery } from '../sql/queryobject';
+import { SqlQuery } from '../sql/sqlqueryobject';
 
 export class GetAffaireSqlQuery extends SqlQuery {
   constructor() {

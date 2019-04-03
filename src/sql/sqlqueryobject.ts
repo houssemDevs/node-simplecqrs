@@ -1,5 +1,5 @@
 import { IQuery } from '../interface/queryobject';
-import { ISqlCriteria } from './criteria';
+import { ISqlCriteria } from './sqlcriteria';
 
 export interface ISqlQuery extends IQuery<ISqlCriteria, string> {}
 
@@ -20,6 +20,8 @@ export class SqlQuery implements ISqlQuery {
     return this;
   }
   toExpression(): string {
-    throw new Error('This class is intended to be subclassed. Ex.: GetStudentQuery');
+    throw new Error(
+      'This class is intended to be subclassed. Ex.: GetStudentQuery'
+    );
   }
 }

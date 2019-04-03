@@ -4,8 +4,8 @@ import tds, { Connection, Request, ColumnValue } from 'tedious';
 
 import { TdsConnectionConfig } from './utils';
 import { IQueryHandler } from '../../interface/queryhandler';
-import { ISqlQuery } from '../queryobject';
-import { ITdsDataMapper } from './datamapper';
+import { ISqlQuery } from '../sqlqueryobject';
+import { ITdsDataMapper } from './tdsdatamapper';
 
 export interface ITdsQueryHandler<TEntity>
   extends IQueryHandler<TEntity, ISqlQuery> {}
