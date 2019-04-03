@@ -7,7 +7,7 @@ export { IQueryHandler, QueryHandler } from './read/queryhandler';
 export { SqlCriteria, ISqlCriteria } from './impl/sql/sqlcriteria';
 export { SqlQuery, ISqlQuery } from './impl/sql/sqlqueryobject';
 
-export { ITdsDataMapper } from './impl/sql/tedious/tdsdatamapper';
+export { ITdsDataMapper, TdsDataMapper } from './impl/sql/tedious/tdsdatamapper';
 export {
   ITdsQueryHandler,
   TdsQueryHandler,
