@@ -1,6 +1,6 @@
 {
   "name": "node-simplecqrs",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "simple cqrs interfaces for node",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
