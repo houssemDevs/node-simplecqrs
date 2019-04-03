@@ -1,23 +1,14 @@
 import { Readable, PassThrough } from 'stream';
 
-import tds, { Connection, ConnectionConfig, Request, ColumnValue } from 'tedious';
+import tds, { Connection, Request, ColumnValue } from 'tedious';
 
+import { TdsConnectionConfig } from './utils';
 import { IQueryHandler } from '../../interface/queryhandler';
 import { ISqlQuery } from '../queryobject';
 import { ITdsDataMapper } from './datamapper';
 
-export interface ITdsQueryHandler<TEntity> extends IQueryHandler<TEntity, ISqlQuery> {}
-
-interface TdsConnectionConfig extends ConnectionConfig {
-  authentication: {
-    type?: string;
-    options: {
-      userName: string;
-      password: string;
-      domain?: string;
-    };
-  };
-}
+export interface ITdsQueryHandler<TEntity>
+  extends IQueryHandler<TEntity, ISqlQuery> {}
 
 export class TdsQueryHandler<TEntity> implements ITdsQueryHandler<TEntity> {
   private connection: Promise<Connection>;
@@ -37,7 +28,6 @@ export class TdsQueryHandler<TEntity> implements ITdsQueryHandler<TEntity> {
     });
   }
   get(query: ISqlQuery): Promise<TEntity[]> {
-    console.log(query.toExpression());
     const result: TEntity[] = [];
     return new Promise((res, rej) => {
       this.connection
@@ -53,7 +43,7 @@ export class TdsQueryHandler<TEntity> implements ITdsQueryHandler<TEntity> {
             res(result);
           });
           req.on('row', row => {
-            const aff = this.dataMapper.toDestination(row);
+            const aff = this.dataMapper.toDomain(row);
             result.push(aff);
           });
           cnn.execSql(req);
@@ -73,7 +63,7 @@ export class TdsQueryHandler<TEntity> implements ITdsQueryHandler<TEntity> {
           rs.push(null);
           cnn.close();
         });
-        req.on('row', row => rs.push(this.dataMapper.toDestination(row)));
+        req.on('row', row => rs.push(this.dataMapper.toDomain(row)));
         cnn.execSql(req);
       })
       .catch(err => {
