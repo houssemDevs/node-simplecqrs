@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --watch"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/houssemdevs/node-simplecqrs"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
