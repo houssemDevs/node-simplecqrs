@@ -1,14 +1,14 @@
 export interface IDateMapper<TPersistanceEntity, TDomainEntity> {
   toDomain(s: TPersistanceEntity): TDomainEntity;
-  toPersistance(d: TDomainEntity): TPersistanceEntity;
+  toStore(d: TDomainEntity): TPersistanceEntity;
 }
 
-export class DataMapper<TPersistanceEntity, TDomainEntity>
-  implements IDateMapper<TPersistanceEntity, TDomainEntity> {
-  public toDomain(s: TPersistanceEntity): TDomainEntity {
+export class DataMapper<TStoreEntity, TDomainEntity>
+  implements IDateMapper<TStoreEntity, TDomainEntity> {
+  public toDomain(s: TStoreEntity): TDomainEntity {
     throw new Error('Method not implemented.');
   }
-  public toPersistance(d: TDomainEntity): TPersistanceEntity {
+  public toStore(d: TDomainEntity): TStoreEntity {
     throw new Error('Method not implemented.');
   }
 }
