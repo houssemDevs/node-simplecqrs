@@ -1,4 +1,4 @@
-export interface IDateMapper<TSource, TDestination> {
-  toDestination(s: TSource): TDestination;
-  toSource(d: TDestination): TSource;
+export interface IDateMapper<TPersistanceEntity, TDomainEntity> {
+  toDomain(s: TPersistanceEntity): TDomainEntity;
+  toPersistance(d: TDomainEntity): TPersistanceEntity;
 }
