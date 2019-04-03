@@ -1,4 +1,4 @@
-import { Readable, PassThrough } from 'stream';
+import { Readable } from 'stream';
 
 export interface IQueryHandler<TEntity, TQueryObject> {
   get(query: TQueryObject): Promise<TEntity[]>;

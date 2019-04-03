@@ -3,7 +3,7 @@ import { Affaire } from './affaire';
 import { AffaireTdsDataMapper } from './affairedm';
 import { GetAffaireSqlQuery } from './affaireqo';
 import { SqlCriteria } from '../sql/criteria';
-import { PassThrough, Transform } from 'stream';
+import { Transform } from 'stream';
 
 const affaire = new TdsQueryHandler<Affaire>(
   {
