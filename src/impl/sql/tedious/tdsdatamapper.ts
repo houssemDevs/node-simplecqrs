@@ -1,4 +1,5 @@
-import { IDateMapper } from '../../interface/datamapper';
 import { ColumnValue } from 'tedious';
+import { IDateMapper } from '../../../common/datamapper';
 
-export interface ITdsDataMapper<TEntity> extends IDateMapper<ColumnValue[], TEntity> {}
+export interface ITdsDataMapper<TEntity>
+  extends IDateMapper<ColumnValue[], TEntity> {}

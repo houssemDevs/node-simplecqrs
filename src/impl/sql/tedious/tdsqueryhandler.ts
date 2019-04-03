@@ -3,9 +3,9 @@ import { Readable, PassThrough } from 'stream';
 import tds, { Connection, Request, ColumnValue } from 'tedious';
 
 import { TdsConnectionConfig } from './utils';
-import { IQueryHandler } from '../../interface/queryhandler';
 import { ISqlQuery } from '../sqlqueryobject';
 import { ITdsDataMapper } from './tdsdatamapper';
+import { IQueryHandler } from '../../../read/queryhandler';
 
 export interface ITdsQueryHandler<TEntity>
   extends IQueryHandler<TEntity, ISqlQuery> {}
