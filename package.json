@@ -8,13 +8,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node_modules/.bin/webpack",
     "watch": "node_modules/.bin/webpack --watch",
-    "version": "npm run build",
+    "preversion": "npm run build",
     "postversion": "git push && git push --tags",
     "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/houssemdevs/node-simplecqrs"
+    "url": "https://github.com/houssemdevs/node-simplecqrs"
   },
   "files": [
     "lib/**/*"
@@ -31,7 +31,6 @@
   "author": "GHIAT Houssem",
   "license": "ISC",
   "dependencies": {
-    "mssql": "^5.0.5",
     "stronger-typed-streams": "^0.1.2",
     "tedious": "^6.1.0"
   },
@@ -40,8 +39,6 @@
     "@types/tedious": "^3.0.0",
     "@types/webpack": "^4.4.26",
     "clean-webpack-plugin": "^2.0.1",
-    "declaration-bundler-webpack-plugin": "^1.0.3",
-    "ts-declaration-webpack-plugin": "^1.1.1",
     "ts-loader": "^5.3.3",
     "tslint": "^5.15.0",
     "typescript": "^3.4.1",
