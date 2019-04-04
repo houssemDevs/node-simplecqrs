@@ -32,6 +32,7 @@
   "license": "ISC",
   "dependencies": {
     "mssql": "^5.0.5",
+    "stronger-typed-streams": "^0.1.2",
     "tedious": "^6.1.0"
   },
   "devDependencies": {

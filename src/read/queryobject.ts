@@ -4,15 +4,24 @@ export interface IQuery<TCriteria, TExpression> {
   toExpression(): TExpression;
 }
 
-export class Query<TCriteria, TExpression>
+export abstract class Query<TCriteria, TExpression>
   implements IQuery<TCriteria, TExpression> {
+  protected criteriaGroups: TCriteria[][];
+  protected currentCriteriaGroup: TCriteria[];
+  constructor() {
+    this.criteriaGroups = [];
+    this.currentCriteriaGroup = [];
+  }
   public addCriteria(c: TCriteria): IQuery<TCriteria, TExpression> {
-    throw new Error('Method not implemented.');
+    this.currentCriteriaGroup.push(c);
+    return this;
   }
   public beginNewGroup(): IQuery<TCriteria, TExpression> {
-    throw new Error('Method not implemented.');
+    if (this.currentCriteriaGroup.length > 0) {
+      this.criteriaGroups.push(this.currentCriteriaGroup);
+      this.currentCriteriaGroup = [];
+    }
+    return this;
   }
-  public toExpression(): TExpression {
-    throw new Error('Method not implemented.');
-  }
+  public abstract toExpression(): TExpression;
 }

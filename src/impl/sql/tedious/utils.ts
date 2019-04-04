@@ -1,3 +1,4 @@
+import { Readable } from 'stronger-typed-streams';
 import { ConnectionConfig } from 'tedious';
 
 // tslint:disable-next-line: interface-name
@@ -10,4 +11,9 @@ export interface TdsConnectionConfig extends ConnectionConfig {
       domain?: string;
     };
   };
+}
+
+export class EntityStream<TEntity> extends Readable<TEntity> {
+  // tslint:disable-next-line: no-empty
+  public _read(size: number) {}
 }

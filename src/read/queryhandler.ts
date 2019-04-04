@@ -1,16 +1,12 @@
-import { Readable } from 'stream';
+import { Readable } from 'stronger-typed-streams';
 
 export interface IQueryHandler<TEntity, TQueryObject> {
   get(query: TQueryObject): Promise<TEntity[]>;
-  getStream(query: TQueryObject): Readable;
+  getStream(query: TQueryObject): Readable<TEntity>;
 }
 
-export class QueryHandler<TEntity, TQueryObject>
+export abstract class QueryHandler<TEntity, TQueryObject>
   implements IQueryHandler<TEntity, TQueryObject> {
-  public get(query: TQueryObject): Promise<TEntity[]> {
-    throw new Error('Method not implemented.');
-  }
-  public getStream(query: TQueryObject): Readable {
-    throw new Error('Method not implemented.');
-  }
+  public abstract get(query: TQueryObject): Promise<TEntity[]>;
+  public abstract getStream(query: TQueryObject): Readable<TEntity>;
 }

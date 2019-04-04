@@ -1,9 +1,9 @@
-import { IQuery } from '../../read/queryobject';
+import { IQuery, Query } from '../../read/queryobject';
 import { ISqlCriteria } from './sqlcriteria';
 
 export interface ISqlQuery extends IQuery<ISqlCriteria, string> {}
 
-export class SqlQuery implements ISqlQuery {
+export class SqlQuery extends Query<ISqlCriteria, string> implements ISqlQuery {
   public static selectQuery(
     tableName: string,
     columnNames: string[],
@@ -15,27 +15,12 @@ export class SqlQuery implements ISqlQuery {
     );
   }
   protected rootExpression: string;
-  protected criteriaGroups: ISqlCriteria[][];
-  protected currentCriteriaGroup: ISqlCriteria[];
   protected constructor(rootExpression: string = '') {
-    this.criteriaGroups = [];
-    this.currentCriteriaGroup = [];
+    super();
     this.rootExpression = rootExpression;
   }
-  public addCriteria(c: ISqlCriteria): IQuery<ISqlCriteria, string> {
-    this.currentCriteriaGroup.push(c);
-    return this;
-  }
-  public beginNewGroup(): IQuery<ISqlCriteria, string> {
-    this.criteriaGroups.push(this.currentCriteriaGroup);
-    this.currentCriteriaGroup = [];
-    return this;
-  }
   public toExpression(): string {
-    if (this.currentCriteriaGroup.length > 0) {
-      this.criteriaGroups.push(this.currentCriteriaGroup);
-      this.currentCriteriaGroup = [];
-    }
+    this.beginNewGroup();
     let whereClause = '';
     this.criteriaGroups.forEach((grp) => {
       if (whereClause.length === 0) {
