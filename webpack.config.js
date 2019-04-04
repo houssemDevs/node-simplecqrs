@@ -2,7 +2,6 @@ const path = require('path');
 
 const cleanplugin = require('clean-webpack-plugin');
 const nodeExternls = require('webpack-node-externals');
-const decBundle = require('ts-declaration-webpack-plugin');
 
 const config = {
   target: 'node',
