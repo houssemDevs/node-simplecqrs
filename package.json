@@ -6,8 +6,8 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules/.bin/webpack",
-    "watch": "node_modules/.bin/webpack --watch",
+    "build": "npx webpack",
+    "watch": "npx webpack --watch",
     "preversion": "npm run build",
     "postversion": "git push && git push --tags",
     "prepare": "npm run build"
@@ -24,19 +24,14 @@
     "simple",
     "nodejs",
     "command",
-    "query",
-    "tds",
-    "tedious"
+    "query"
   ],
   "author": "GHIAT Houssem",
   "license": "ISC",
   "dependencies": {
-    "stronger-typed-streams": "^0.1.2",
-    "tedious": "^6.1.0"
+    "stronger-typed-streams": "^0.1.2"
   },
   "devDependencies": {
-    "@types/mssql": "^4.0.13",
-    "@types/tedious": "^3.0.0",
     "@types/webpack": "^4.4.26",
     "clean-webpack-plugin": "^2.0.1",
     "ts-loader": "^5.3.3",
