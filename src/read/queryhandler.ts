@@ -1,6 +1,6 @@
-import { Readable } from 'stronger-typed-streams';
+import { Readable } from 'stream';
 
 export interface IQueryHandler<TEntity, TQueryObject> {
   get(query: TQueryObject): Promise<TEntity[]>;
-  getStream(query: TQueryObject): Readable<TEntity>;
+  getStream(query: TQueryObject): Readable;
 }
