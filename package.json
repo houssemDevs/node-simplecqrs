@@ -24,13 +24,12 @@
     "simple",
     "nodejs",
     "command",
-    "query"
+    "query",
+    "interface"
   ],
   "author": "GHIAT Houssem",
   "license": "ISC",
-  "dependencies": {
-    "stronger-typed-streams": "^0.1.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/webpack": "^4.4.26",
     "clean-webpack-plugin": "^2.0.1",
