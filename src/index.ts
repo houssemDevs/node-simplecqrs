@@ -5,4 +5,4 @@ export { IQuery, Query } from './read/queryobject';
 export { IQueryHandler } from './read/queryhandler';
 
 export { ICommand } from './write/commandobject';
-export { ICommandHandler, CommandHandler } from './write/commandhandler';
+export { ICommandHandler } from './write/commandhandler';

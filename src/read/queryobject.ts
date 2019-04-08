@@ -1,22 +1,23 @@
-export interface IQuery<TCriteria, TExpression> {
-  addCriteria(c: TCriteria): IQuery<TCriteria, TExpression>;
-  beginNewGroup(): IQuery<TCriteria, TExpression>;
+import { ICriteria } from './criteria';
+
+export interface IQuery<TExpression, TCriteria> {
+  addCriteria(c: TCriteria): IQuery<TExpression, TCriteria>;
+  beginNewGroup(): IQuery<TExpression, TCriteria>;
   toExpression(): TExpression;
 }
 
-export abstract class Query<TCriteria, TExpression>
-  implements IQuery<TCriteria, TExpression> {
+export abstract class Query<TExpression, TCriteria> implements IQuery<TExpression, TCriteria> {
   protected criteriaGroups: TCriteria[][];
   protected currentCriteriaGroup: TCriteria[];
   constructor() {
     this.criteriaGroups = [];
     this.currentCriteriaGroup = [];
   }
-  public addCriteria(c: TCriteria): IQuery<TCriteria, TExpression> {
+  public addCriteria(c: TCriteria): IQuery<TExpression, TCriteria> {
     this.currentCriteriaGroup.push(c);
     return this;
   }
-  public beginNewGroup(): IQuery<TCriteria, TExpression> {
+  public beginNewGroup(): IQuery<TExpression, TCriteria> {
     if (this.currentCriteriaGroup.length > 0) {
       this.criteriaGroups.push(this.currentCriteriaGroup);
       this.currentCriteriaGroup = [];
