@@ -1,12 +1,11 @@
-import { ICriteria } from './criteria';
-
 export interface IQuery<TExpression, TCriteria> {
   addCriteria(c: TCriteria): IQuery<TExpression, TCriteria>;
   beginNewGroup(): IQuery<TExpression, TCriteria>;
   toExpression(): TExpression;
 }
 
-export abstract class Query<TExpression, TCriteria> implements IQuery<TExpression, TCriteria> {
+export abstract class Query<TExpression, TCriteria>
+  implements IQuery<TExpression, TCriteria> {
   protected criteriaGroups: TCriteria[][];
   protected currentCriteriaGroup: TCriteria[];
   constructor() {
