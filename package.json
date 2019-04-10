@@ -25,7 +25,8 @@
     "nodejs",
     "command",
     "query",
-    "interface"
+    "interface",
+    "abstract"
   ],
   "author": "GHIAT Houssem",
   "license": "ISC",
