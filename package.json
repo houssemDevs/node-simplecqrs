@@ -6,8 +6,10 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx webpack",
-    "watch": "npx webpack --watch",
+    "prebuild": "npm run clean",
+    "build": "npx tsc",
+    "clean": "rimraf -G ./lib",
+    "watch": "npx tsc --watch",
     "preversion": "npm run build",
     "postversion": "git push && git push --tags",
     "prepare": "npm run build"
@@ -32,13 +34,9 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "@types/webpack": "^4.4.26",
-    "clean-webpack-plugin": "^2.0.1",
-    "ts-loader": "^5.3.3",
+    "@types/node": "^11.13.4",
+    "rimraf": "^2.6.3",
     "tslint": "^5.15.0",
-    "typescript": "^3.4.1",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
-    "webpack-node-externals": "^1.7.2"
+    "typescript": "^3.4.1"
   }
 }
