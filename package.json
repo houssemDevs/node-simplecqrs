@@ -5,12 +5,12 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx jest",
     "prebuild": "npm run clean",
     "build": "npx tsc",
     "clean": "rimraf -G ./lib",
     "watch": "npx tsc --watch",
-    "preversion": "npm run build",
+    "preversion": "npm run build && npm test",
     "postversion": "git push && git push --tags",
     "prepare": "npm run build"
   },
@@ -37,8 +37,11 @@
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.11",
     "@types/node": "^11.13.5",
+    "jest": "^24.7.1",
     "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.2",
     "tslint": "^5.15.0",
     "typescript": "^3.4.1"
   }
