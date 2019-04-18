@@ -6,7 +6,7 @@ import { TYPES } from './constants';
 
 export const getQHFromContainer = <T>(
   container: Container,
-  name: string,
+  name: symbol,
 ): IQueryHandler<T> => container.getNamed(TYPES.query, name);
 
 export const getCHFromContainer = (

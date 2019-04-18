@@ -1,22 +1,16 @@
+import { decorate, injectable } from 'inversify';
 import { METADATA_KEYS } from './constants';
-import { CommandMetadata, QueryMetadata } from './types';
+import { CommandMetadata, QueryHandlerMetadata, QueryMetadata } from './types';
+import { getQueryMetadata } from './utils';
 
-export const query = (handler: Function): ClassDecorator => (
-  target: Function,
-) => {
+export const query: ClassDecorator = (target: Function) => {
   const newMetadata: QueryMetadata = {
     name: target.name,
-    handler,
+    id: Symbol(target.name),
+    handler: undefined,
   };
 
-  const queriesMetadata: QueryMetadata[] =
-    Reflect.getMetadata(METADATA_KEYS.queries, Reflect) || [];
-
-  Reflect.defineMetadata(
-    METADATA_KEYS.queries,
-    [...queriesMetadata, newMetadata],
-    Reflect,
-  );
+  Reflect.defineMetadata(METADATA_KEYS.queries, newMetadata, target);
 };
 
 export const command = (handler: Function): ClassDecorator => (
@@ -35,4 +29,25 @@ export const command = (handler: Function): ClassDecorator => (
     [...commandsMetadata, newMetadata],
     Reflect,
   );
+};
+
+export const queryHandler = (...queries: Function[]): ClassDecorator => (
+  target: Function,
+) => {
+  const newMetadata: QueryHandlerMetadata = {
+    name: target.name,
+    handler: target,
+    queries: queries.map((q) => getQueryMetadata(q)),
+  };
+
+  const queryHandlers: QueryHandlerMetadata[] =
+    Reflect.getMetadata(METADATA_KEYS.queryHandlers, Reflect) || [];
+
+  Reflect.defineMetadata(
+    METADATA_KEYS.queryHandlers,
+    [...queryHandlers, newMetadata],
+    Reflect,
+  );
+
+  decorate(injectable(), target);
 };
