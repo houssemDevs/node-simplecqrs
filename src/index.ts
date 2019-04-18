@@ -8,3 +8,7 @@ export { IQueryDispatcher } from './read/querydispatcher';
 export { ICommand } from './write/commandobject';
 export { ICommandHandler } from './write/commandhandler';
 export { ICommandDispatcher } from './write/commanddispatcher';
+
+export { query, command } from './ioc/decorators';
+export { InvesrifyCommandDispatcher } from './ioc/inversify/commanddispatcher';
+export { InversifyQueryDispatcher } from './ioc/inversify/querydispatcher';
