@@ -7,9 +7,16 @@ import { Container } from 'inversify';
 import { InversifyQueryDispatcher, IQuery, IQueryHandler, query } from '../src';
 
 import { METADATA_KEYS } from '../src/ioc/constants';
+import { queryHandler } from '../src/ioc/decorators';
 import { QueryMetadata } from '../src/ioc/types';
 
 describe('QueryDispatcher', () => {
+  @query
+  class GetUsersQuery implements IQuery {}
+
+  @query
+  class GetFirstUserQuery implements IQuery {}
+  @queryHandler(GetUsersQuery, GetFirstUserQuery)
   class UserQueryHandler implements IQueryHandler<{}> {
     public get(q: IQuery): Promise<Array<{}>> {
       if (q instanceof GetFirstUserQuery) {
@@ -35,28 +42,14 @@ describe('QueryDispatcher', () => {
     }
   }
 
-  @query(UserQueryHandler)
-  class GetUsersQuery implements IQuery {}
-
-  @query(UserQueryHandler)
-  class GetFirstUserQuery implements IQuery {}
-
   it('should define metadata correctly', () => {
-    const metas = Reflect.getMetadata(METADATA_KEYS.queries, Reflect);
+    const getUserQueryMeta = Reflect.getMetadata(METADATA_KEYS.queries, GetUsersQuery);
+    expect(getUserQueryMeta).toBeDefined();
+    expect(getUserQueryMeta.id).toBeDefined();
 
-    const getUsersQueryMetadata: QueryMetadata = {
-      name: GetUsersQuery.name,
-      handler: UserQueryHandler,
-    };
-
-    const getFirstUserQueryMetadata: QueryMetadata = {
-      name: GetFirstUserQuery.name,
-      handler: UserQueryHandler,
-    };
-
-    expect(metas.length).toEqual(2);
-    expect(metas[0]).toEqual(getUsersQueryMetadata);
-    expect(metas[1]).toEqual(getFirstUserQueryMetadata);
+    const getFirstUserQuery = Reflect.getMetadata(METADATA_KEYS.queries, GetFirstUserQuery);
+    expect(getFirstUserQuery).toBeDefined();
+    expect(getFirstUserQuery.id).toBeDefined();
   });
 
   it('should dispatch queries correctly', async () => {

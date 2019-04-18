@@ -2,17 +2,22 @@ import 'reflect-metadata';
 
 import { Container } from 'inversify';
 
-import {
-  command,
-  ICommand,
-  ICommandHandler,
-  InvesrifyCommandDispatcher,
-} from '../src';
+import { command, ICommand, ICommandHandler, InvesrifyCommandDispatcher } from '../src';
 
+import { commandHandler } from '../src/ioc/decorators';
 import { CommandMetadata } from '../src/ioc/types';
-import { getCommandsMetadata, getObjectName } from '../src/ioc/utils';
+import { getCommandMetadata, getCommandsMetadata, getObjectName } from '../src/ioc/utils';
 
 describe('CommandDispatcher', () => {
+  @command
+  class CreateUserCommand implements ICommand {}
+
+  @command
+  class DeleteUserCommand implements ICommand {}
+
+  class UpdateUserCommand implements ICommand {}
+
+  @commandHandler(CreateUserCommand, DeleteUserCommand)
   class CommandHandler implements ICommandHandler {
     public exec(c: ICommand): Promise<boolean> {
       if (c instanceof DeleteUserCommand) {
@@ -22,29 +27,15 @@ describe('CommandDispatcher', () => {
     }
   }
 
-  @command(CommandHandler)
-  class CreateUserCommand implements ICommand {}
-
-  @command(CommandHandler)
-  class DeleteUserCommand implements ICommand {}
-
   describe('metadata', () => {
     it('should define metadata correctly', () => {
-      const metas = getCommandsMetadata();
+      const createUserCommandMetadata = getCommandMetadata(CreateUserCommand);
+      expect(createUserCommandMetadata).toBeDefined();
+      expect(createUserCommandMetadata.id).toBeDefined();
 
-      const createUserCommandMetadata: CommandMetadata = {
-        name: CreateUserCommand.name,
-        handler: CommandHandler,
-      };
-
-      const deleteUserCommandMetadata: CommandMetadata = {
-        name: DeleteUserCommand.name,
-        handler: CommandHandler,
-      };
-
-      expect(metas.length).toEqual(2);
-      expect(metas[0]).toEqual(createUserCommandMetadata);
-      expect(metas[1]).toEqual(deleteUserCommandMetadata);
+      const deleteUserCommandMetadata = getCommandMetadata(DeleteUserCommand);
+      expect(deleteUserCommandMetadata).toBeDefined();
+      expect(deleteUserCommandMetadata.id).toBeDefined();
     });
   });
 
