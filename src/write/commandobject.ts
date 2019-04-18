@@ -1,3 +1,1 @@
-export interface ICommand<TExpression> {
-  toExpression(): TExpression;
-}
+export interface ICommand {}

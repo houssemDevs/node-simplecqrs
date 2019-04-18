@@ -1,6 +1,8 @@
 import { Readable } from 'stream';
 
-export interface IQueryDispatcher<TEntity, TQueryObject> {
-  get(q: TQueryObject): TEntity[];
-  getStream(q: TQueryObject): Readable;
+import { IQuery } from './queryobject';
+
+export interface IQueryDispatcher {
+  dispatch<TEntity>(q: IQuery): Promise<TEntity[]>;
+  dispatchStream<TEntity>(q: IQuery): Readable;
 }

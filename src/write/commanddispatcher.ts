@@ -1,3 +1,5 @@
-export interface ICommandDispatcher<TCommandObject> {
-  exec(c: TCommandObject): Promise<boolean>;
+import { ICommand } from './commandobject';
+
+export interface ICommandDispatcher {
+  dispatch(c: ICommand): Promise<boolean>;
 }

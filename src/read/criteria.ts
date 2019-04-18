@@ -1,7 +1,5 @@
-export interface ICriteria<TExpression> {
-  toExpression(): TExpression;
-}
+export interface ICriteria {}
 
-export interface IFilterCriteria<TExpression> extends ICriteria<TExpression> {}
+export interface IFilterCriteria extends ICriteria {}
 
-export interface ISortCriteria<TExpression> extends ICriteria<TExpression> {}
+export interface ISortCriteria extends ICriteria {}

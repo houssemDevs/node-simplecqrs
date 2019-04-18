@@ -32,9 +32,12 @@
   ],
   "author": "GHIAT Houssem",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "inversify": "^5.0.1",
+    "reflect-metadata": "^0.1.13"
+  },
   "devDependencies": {
-    "@types/node": "^11.13.4",
+    "@types/node": "^11.13.5",
     "rimraf": "^2.6.3",
     "tslint": "^5.15.0",
     "typescript": "^3.4.1"
