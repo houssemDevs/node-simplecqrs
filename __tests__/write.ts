@@ -5,8 +5,7 @@ import { Container } from 'inversify';
 import { command, ICommand, ICommandHandler, InvesrifyCommandDispatcher } from '../src';
 
 import { commandHandler } from '../src/ioc/decorators';
-import { CommandMetadata } from '../src/ioc/types';
-import { getCommandMetadata, getCommandsMetadata, getObjectName } from '../src/ioc/utils';
+import { getCommandMetadata } from '../src/ioc/utils';
 
 describe('CommandDispatcher', () => {
   @command

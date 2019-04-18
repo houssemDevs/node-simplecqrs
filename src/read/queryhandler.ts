@@ -1,6 +1,6 @@
 import { Readable } from 'stream';
 
-import { IQuery } from './queryobject';
+import { IQuery } from './query';
 
 export interface IQueryHandler<TEntity> {
   get(q: IQuery): Promise<TEntity[]>;

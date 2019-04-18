@@ -1,8 +1,8 @@
 import { Container, decorate, injectable } from 'inversify';
 
+import { ICommand } from '../../write/command';
 import { ICommandDispatcher } from '../../write/commanddispatcher';
-import { ICommand } from '../../write/commandobject';
-import { getCHMetadata, getCommandId, getCommandsMetadata, getObjectConstructor, getObjectName } from '../utils';
+import { getCHMetadata, getCommandId, getObjectConstructor } from '../utils';
 import { TYPES } from './constants';
 import { getCHFromContainer } from './utils';
 

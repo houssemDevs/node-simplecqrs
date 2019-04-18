@@ -2,6 +2,9 @@ export interface QueryMetadata {
   id: Symbol;
 }
 
+export interface MessageMetadata {
+  id: Symbol;
+}
 export interface CommandMetadata {
   id: Symbol;
 }

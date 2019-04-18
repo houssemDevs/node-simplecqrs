@@ -1,22 +1,22 @@
 import { decorate, injectable } from 'inversify';
 import { METADATA_KEYS } from './constants';
-import { CommandHandlerMetadata, CommandMetadata, QueryHandlerMetadata, QueryMetadata } from './types';
+import { CommandHandlerMetadata, MessageMetadata, QueryHandlerMetadata, QueryMetadata } from './types';
 import { getCommandMetadata, getQueryMetadata } from './utils';
 
 export const query: ClassDecorator = (target: Function) => {
-  const metadata: QueryMetadata = {
+  const metadata: MessageMetadata = {
     id: Symbol(target.name),
   };
 
-  Reflect.defineMetadata(METADATA_KEYS.queries, metadata, target);
+  Reflect.defineMetadata(METADATA_KEYS.query, metadata, target);
 };
 
 export const command: ClassDecorator = (target: Function) => {
-  const metadata: CommandMetadata = {
+  const metadata: MessageMetadata = {
     id: Symbol(target.name),
   };
 
-  Reflect.defineMetadata(METADATA_KEYS.commands, metadata, target);
+  Reflect.defineMetadata(METADATA_KEYS.command, metadata, target);
 };
 
 export const queryHandler = (...queries: Function[]): ClassDecorator => (target: Function) => {
@@ -30,8 +30,7 @@ export const queryHandler = (...queries: Function[]): ClassDecorator => (target:
     Reflect.getMetadata(METADATA_KEYS.queryHandlers, Reflect) || new Map();
 
   if (queryHandlers.has(target.name)) {
-    console.log(`Query handler already decorated ${target.name}`);
-    return;
+    throw new Error(`Query handler already decorated ${target.name}`);
   }
 
   queryHandlers.set(target.name, newMetadata);
@@ -52,8 +51,7 @@ export const commandHandler = (...commands: Function[]): ClassDecorator => (targ
     Reflect.getMetadata(METADATA_KEYS.commandHandlers, Reflect) || new Map();
 
   if (commandHandlers.has(target.name)) {
-    console.log(`command handler already decorated ${target.name}`);
-    return;
+    throw new Error(`command handler already decorated ${target.name}`);
   }
 
   commandHandlers.set(target.name, newMetadata);

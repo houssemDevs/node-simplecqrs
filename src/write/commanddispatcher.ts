@@ -1,4 +1,4 @@
-import { ICommand } from './commandobject';
+import { ICommand } from './command';
 
 export interface ICommandDispatcher {
   dispatch(c: ICommand): Promise<boolean>;

@@ -9,6 +9,7 @@ import { InversifyQueryDispatcher, IQuery, IQueryHandler, query } from '../src';
 import { METADATA_KEYS } from '../src/ioc/constants';
 import { queryHandler } from '../src/ioc/decorators';
 import { QueryMetadata } from '../src/ioc/types';
+import { getQueryMetadata } from '../src/ioc/utils';
 
 describe('QueryDispatcher', () => {
   @query
@@ -43,11 +44,11 @@ describe('QueryDispatcher', () => {
   }
 
   it('should define metadata correctly', () => {
-    const getUserQueryMeta = Reflect.getMetadata(METADATA_KEYS.queries, GetUsersQuery);
+    const getUserQueryMeta = getQueryMetadata(GetUsersQuery);
     expect(getUserQueryMeta).toBeDefined();
     expect(getUserQueryMeta.id).toBeDefined();
 
-    const getFirstUserQuery = Reflect.getMetadata(METADATA_KEYS.queries, GetFirstUserQuery);
+    const getFirstUserQuery = getQueryMetadata(GetFirstUserQuery);
     expect(getFirstUserQuery).toBeDefined();
     expect(getFirstUserQuery.id).toBeDefined();
   });
