@@ -9,6 +9,6 @@ export { ICommand } from './write/command';
 export { ICommandHandler } from './write/commandhandler';
 export { ICommandDispatcher } from './write/commanddispatcher';
 
-export { query, command } from './ioc/decorators';
+export { query, command, queryHandler, commandHandler } from './ioc/decorators';
 export { InvesrifyCommandDispatcher } from './ioc/inversify/commanddispatcher';
 export { InversifyQueryDispatcher } from './ioc/inversify/querydispatcher';
