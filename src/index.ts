@@ -1,13 +1,13 @@
 export { IDateMapper } from './common/datamapper';
 
-export { ICriteria, IFilterCriteria, ISortCriteria } from './read/criteria';
-export { IQuery } from './read/query';
-export { IQueryHandler } from './read/queryhandler';
-export { IQueryDispatcher } from './read/querydispatcher';
+export { ICriteria, IFilterCriteria, ISortCriteria } from './query/criteria';
+export { IQuery } from './query/query';
+export { IQueryHandler } from './query/queryhandler';
+export { IQueryDispatcher } from './query/querydispatcher';
 
-export { ICommand } from './write/command';
-export { ICommandHandler } from './write/commandhandler';
-export { ICommandDispatcher } from './write/commanddispatcher';
+export { ICommand } from './command/command';
+export { ICommandHandler } from './command/commandhandler';
+export { ICommandDispatcher } from './command/commanddispatcher';
 
 export { query, command, queries, commands } from './ioc/decorators';
 export { InvesrifyCommandDispatcher } from './ioc/inversify/commanddispatcher';

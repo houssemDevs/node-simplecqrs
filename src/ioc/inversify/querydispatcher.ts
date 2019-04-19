@@ -2,8 +2,8 @@ import { Readable } from 'stream';
 
 import { Container, decorate, injectable } from 'inversify';
 
-import { IQuery } from '../../read/query';
-import { IQueryDispatcher } from '../../read/querydispatcher';
+import { IQuery } from '../../query/query';
+import { IQueryDispatcher } from '../../query/querydispatcher';
 import { getObjectConstructor, getQHMetadata, getQueryId } from '../utils';
 import { TYPES } from './constants';
 import { getQHFromContainer } from './utils';

@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 
-import { IQueryHandler } from '../../read/queryhandler';
-import { ICommandHandler } from '../../write/commandhandler';
+import { ICommandHandler } from '../../command/commandhandler';
+import { IQueryHandler } from '../../query/queryhandler';
 import { TYPES } from './constants';
 
 export const getQHFromContainer = <T>(container: Container, name: Symbol): IQueryHandler<T> =>
