@@ -2,9 +2,8 @@ import 'reflect-metadata';
 
 import { Container } from 'inversify';
 
-import { command, ICommand, ICommandHandler, InvesrifyCommandDispatcher } from '../src';
+import { command, commands, ICommand, ICommandHandler, InvesrifyCommandDispatcher } from '../src';
 
-import { commandHandler } from '../src/ioc/decorators';
 import { getCommandMetadata } from '../src/ioc/utils';
 
 describe('CommandDispatcher', () => {
@@ -16,7 +15,7 @@ describe('CommandDispatcher', () => {
 
   class UpdateUserCommand implements ICommand {}
 
-  @commandHandler(CreateUserCommand, DeleteUserCommand)
+  @commands(CreateUserCommand, DeleteUserCommand)
   class CommandHandler implements ICommandHandler {
     public exec(c: ICommand): Promise<boolean> {
       if (c instanceof DeleteUserCommand) {

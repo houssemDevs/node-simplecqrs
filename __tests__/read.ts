@@ -6,9 +6,7 @@ import { Container } from 'inversify';
 
 import { InversifyQueryDispatcher, IQuery, IQueryHandler, query } from '../src';
 
-import { METADATA_KEYS } from '../src/ioc/constants';
-import { queryHandler } from '../src/ioc/decorators';
-import { QueryMetadata } from '../src/ioc/types';
+import { queries } from '../src/ioc/decorators';
 import { getQueryMetadata } from '../src/ioc/utils';
 
 describe('QueryDispatcher', () => {
@@ -17,7 +15,7 @@ describe('QueryDispatcher', () => {
 
   @query
   class GetFirstUserQuery implements IQuery {}
-  @queryHandler(GetUsersQuery, GetFirstUserQuery)
+  @queries(GetUsersQuery, GetFirstUserQuery)
   class UserQueryHandler implements IQueryHandler<{}> {
     public get(q: IQuery): Promise<Array<{}>> {
       if (q instanceof GetFirstUserQuery) {
