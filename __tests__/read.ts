@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { Readable } from 'stream';
 
-import { Container } from 'inversify';
+import { Container, injectable } from 'inversify';
 
 import { InversifyQueryDispatcher, IQuery, IQueryHandler, query } from '../src';
 
@@ -15,6 +15,7 @@ describe('QueryDispatcher', () => {
 
   @query
   class GetFirstUserQuery implements IQuery {}
+  @injectable()
   @queries(GetUsersQuery, GetFirstUserQuery)
   class UserQueryHandler implements IQueryHandler<{}> {
     public get(q: IQuery): Promise<Array<{}>> {

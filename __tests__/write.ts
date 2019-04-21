@@ -1,8 +1,14 @@
 import 'reflect-metadata';
 
-import { Container } from 'inversify';
+import { Container, injectable } from 'inversify';
 
-import { command, commands, ICommand, ICommandHandler, InvesrifyCommandDispatcher } from '../src';
+import {
+  command,
+  commands,
+  ICommand,
+  ICommandHandler,
+  InvesrifyCommandDispatcher,
+} from '../src';
 
 import { getCommandMetadata } from '../src/ioc/utils';
 
@@ -15,6 +21,7 @@ describe('CommandDispatcher', () => {
 
   class UpdateUserCommand implements ICommand {}
 
+  @injectable()
   @commands(CreateUserCommand, DeleteUserCommand)
   class CommandHandler implements ICommandHandler {
     public exec(c: ICommand): Promise<boolean> {
