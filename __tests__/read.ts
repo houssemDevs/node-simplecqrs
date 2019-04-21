@@ -15,7 +15,7 @@ describe('QueryDispatcher', () => {
 
   @query
   class GetFirstUserQuery implements IQuery {}
-  @injectable()
+
   @queries(GetUsersQuery, GetFirstUserQuery)
   class UserQueryHandler implements IQueryHandler<{}> {
     public get(q: IQuery): Promise<Array<{}>> {

@@ -1,4 +1,4 @@
-import { Container } from 'inversify';
+import { Container, decorate, injectable } from 'inversify';
 
 import { ICommand } from '../../command/command';
 import { ICommandDispatcher } from '../../command/commanddispatcher';
@@ -11,6 +11,8 @@ export class InvesrifyCommandDispatcher implements ICommandDispatcher {
     const chMetadata = getCHMetadata();
 
     chMetadata.forEach((chm) => {
+      decorate(injectable(), chm.handler);
+
       chm.commands.forEach((cm) => {
         this.container
           .bind(TYPES.command)

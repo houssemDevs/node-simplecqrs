@@ -1,6 +1,6 @@
 import { Readable } from 'stream';
 
-import { Container } from 'inversify';
+import { Container, decorate, injectable } from 'inversify';
 
 import { IQuery } from '../../query/query';
 import { IQueryDispatcher } from '../../query/querydispatcher';
@@ -13,6 +13,8 @@ export class InversifyQueryDispatcher implements IQueryDispatcher {
     const qhMetadata = getQHMetadata();
 
     qhMetadata.forEach((qhm) => {
+      decorate(injectable(), qhm.handler);
+
       qhm.queries.forEach((qn) => {
         this.container
           .bind(TYPES.query)

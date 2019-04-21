@@ -21,7 +21,6 @@ describe('CommandDispatcher', () => {
 
   class UpdateUserCommand implements ICommand {}
 
-  @injectable()
   @commands(CreateUserCommand, DeleteUserCommand)
   class CommandHandler implements ICommandHandler {
     public exec(c: ICommand): Promise<boolean> {
