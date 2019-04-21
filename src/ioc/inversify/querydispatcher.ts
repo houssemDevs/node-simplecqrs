@@ -1,6 +1,6 @@
 import { Readable } from 'stream';
 
-import { Container, decorate, injectable } from 'inversify';
+import { Container } from 'inversify';
 
 import { IQuery } from '../../query/query';
 import { IQueryDispatcher } from '../../query/querydispatcher';
@@ -23,7 +23,10 @@ export class InversifyQueryDispatcher implements IQueryDispatcher {
   }
 
   public dispatch<TEntity>(q: IQuery): Promise<TEntity[]> {
-    const h = getQHFromContainer<TEntity>(this.container, getQueryId(getObjectConstructor(q)));
+    const h = getQHFromContainer<TEntity>(
+      this.container,
+      getQueryId(getObjectConstructor(q)),
+    );
 
     if (h) {
       return h.get(q);
@@ -33,7 +36,10 @@ export class InversifyQueryDispatcher implements IQueryDispatcher {
   }
 
   public dispatchStream<TEntity>(q: IQuery): Readable {
-    const h = getQHFromContainer<TEntity>(this.container, getQueryId(getObjectConstructor(q)));
+    const h = getQHFromContainer<TEntity>(
+      this.container,
+      getQueryId(getObjectConstructor(q)),
+    );
 
     if (h) {
       return h.getStream(q);

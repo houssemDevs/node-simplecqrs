@@ -8,9 +8,9 @@ import { getCHFromContainer } from './utils';
 
 export class InvesrifyCommandDispatcher implements ICommandDispatcher {
   constructor(private container: Container) {
-    const commandHandlersMetadata = getCHMetadata();
+    const chMetadata = getCHMetadata();
 
-    commandHandlersMetadata.forEach((chm) => {
+    chMetadata.forEach((chm) => {
       chm.commands.forEach((cm) => {
         this.container
           .bind(TYPES.command)
@@ -21,7 +21,10 @@ export class InvesrifyCommandDispatcher implements ICommandDispatcher {
   }
 
   public dispatch(c: ICommand): Promise<boolean> {
-    const h = getCHFromContainer(this.container, getCommandId(getObjectConstructor(c)));
+    const h = getCHFromContainer(
+      this.container,
+      getCommandId(getObjectConstructor(c)),
+    );
 
     if (h) {
       return h.exec(c);
