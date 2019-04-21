@@ -1,13 +1,10 @@
-export interface QueryMetadata {
-  id: Symbol;
-}
-
 export interface MessageMetadata {
   id: Symbol;
 }
-export interface CommandMetadata {
-  id: Symbol;
-}
+
+export interface QueryMetadata extends MessageMetadata {}
+
+export interface CommandMetadata extends MessageMetadata {}
 
 export interface QueryHandlerMetadata {
   name: string;
