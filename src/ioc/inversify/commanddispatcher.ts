@@ -15,7 +15,7 @@ export class InvesrifyCommandDispatcher implements ICommandDispatcher {
 
       chm.commands.forEach((cm) => {
         this.container
-          .bind(TYPES.command)
+          .bind(TYPES.commandHandler)
           .to(chm.handler)
           .whenTargetNamed(cm.id.valueOf());
       });

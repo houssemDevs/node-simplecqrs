@@ -1,6 +1,6 @@
+export { IMessage } from './common/message';
 export { IDateMapper } from './common/datamapper';
 
-export { ICriteria, IFilterCriteria, ISortCriteria } from './query/criteria';
 export { IQuery } from './query/query';
 export { IQueryHandler } from './query/queryhandler';
 export { IQueryDispatcher } from './query/querydispatcher';

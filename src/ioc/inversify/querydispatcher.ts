@@ -17,7 +17,7 @@ export class InversifyQueryDispatcher implements IQueryDispatcher {
 
       qhm.queries.forEach((qn) => {
         this.container
-          .bind(TYPES.query)
+          .bind(TYPES.queryHandler)
           .to(qhm.handler)
           .whenTargetNamed(qn.id.valueOf());
       });
