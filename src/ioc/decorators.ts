@@ -1,6 +1,10 @@
 import { decorate, injectable } from 'inversify';
 import { METADATA_KEYS } from './constants';
-import { CommandHandlerMetadata, MessageMetadata, QueryHandlerMetadata } from './types';
+import {
+  CommandHandlerMetadata,
+  MessageMetadata,
+  QueryHandlerMetadata,
+} from './types';
 import { getCommandMetadata, getQueryMetadata } from './utils';
 
 export const query: ClassDecorator = (target: Function) => {
@@ -20,7 +24,9 @@ export const command: ClassDecorator = (target: Function) => {
 };
 
 // tslint:disable-next-line: no-shadowed-variable
-export const queries = (...queries: Function[]): ClassDecorator => (target: Function) => {
+export const queries = (...queries: Function[]): ClassDecorator => (
+  target: Function,
+) => {
   const newMetadata: QueryHandlerMetadata = {
     name: target.name,
     handler: target,
@@ -37,12 +43,12 @@ export const queries = (...queries: Function[]): ClassDecorator => (target: Func
   queryHandlers.set(target.name, newMetadata);
 
   Reflect.defineMetadata(METADATA_KEYS.queryHandlers, queryHandlers, Reflect);
-
-  decorate(injectable(), target);
 };
 
 // tslint:disable-next-line: no-shadowed-variable
-export const commands = (...commands: Function[]): ClassDecorator => (target: Function) => {
+export const commands = (...commands: Function[]): ClassDecorator => (
+  target: Function,
+) => {
   const newMetadata: CommandHandlerMetadata = {
     name: target.name,
     handler: target,
@@ -58,7 +64,9 @@ export const commands = (...commands: Function[]): ClassDecorator => (target: Fu
 
   commandHandlers.set(target.name, newMetadata);
 
-  Reflect.defineMetadata(METADATA_KEYS.commandHandlers, commandHandlers, Reflect);
-
-  decorate(injectable(), target);
+  Reflect.defineMetadata(
+    METADATA_KEYS.commandHandlers,
+    commandHandlers,
+    Reflect,
+  );
 };
