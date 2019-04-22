@@ -2,26 +2,20 @@ import 'reflect-metadata';
 
 import { Container, injectable } from 'inversify';
 
-import {
-  command,
-  commands,
-  ICommand,
-  ICommandHandler,
-  InvesrifyCommandDispatcher,
-} from '../src';
+import { ICommand, ICommandHandler, IoC } from '../src';
 
 import { getCommandMetadata } from '../src/ioc/utils';
 
 describe('CommandDispatcher', () => {
-  @command
+  @IoC.command
   class CreateUserCommand implements ICommand {}
 
-  @command
+  @IoC.command
   class DeleteUserCommand implements ICommand {}
 
   class UpdateUserCommand implements ICommand {}
 
-  @commands(CreateUserCommand, DeleteUserCommand)
+  @IoC.commands(CreateUserCommand, DeleteUserCommand)
   class CommandHandler implements ICommandHandler {
     public exec(c: ICommand): Promise<boolean> {
       if (c instanceof DeleteUserCommand) {
@@ -45,7 +39,7 @@ describe('CommandDispatcher', () => {
 
   describe('dispatching', () => {
     it('should dispatch commands correctly', async () => {
-      const iocDispatcher = new InvesrifyCommandDispatcher(new Container());
+      const iocDispatcher = new IoC.Inversify.InvesrifyCommandDispatcher(new Container());
 
       const isCreated = await iocDispatcher.dispatch(new CreateUserCommand());
       expect(isCreated).toBeTruthy();

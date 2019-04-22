@@ -9,6 +9,5 @@ export { ICommand } from './command/command';
 export { ICommandHandler } from './command/commandhandler';
 export { ICommandDispatcher } from './command/commanddispatcher';
 
-export { query, command, queries, commands } from './ioc/decorators';
-export { InvesrifyCommandDispatcher } from './ioc/inversify/commanddispatcher';
-export { InversifyQueryDispatcher } from './ioc/inversify/querydispatcher';
+import * as IoC from './ioc';
+export { IoC };

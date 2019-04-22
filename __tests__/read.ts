@@ -2,21 +2,20 @@ import 'reflect-metadata';
 
 import { Readable } from 'stream';
 
-import { Container, injectable } from 'inversify';
+import { Container } from 'inversify';
 
-import { InversifyQueryDispatcher, IQuery, IQueryHandler, query } from '../src';
+import { IoC, IQuery, IQueryHandler } from '../src';
 
-import { queries } from '../src/ioc/decorators';
 import { getQueryMetadata } from '../src/ioc/utils';
 
 describe('QueryDispatcher', () => {
-  @query
+  @IoC.query
   class GetUsersQuery implements IQuery {}
 
-  @query
+  @IoC.query
   class GetFirstUserQuery implements IQuery {}
 
-  @queries(GetUsersQuery, GetFirstUserQuery)
+  @IoC.queries(GetUsersQuery, GetFirstUserQuery)
   class UserQueryHandler implements IQueryHandler<{}> {
     public get(q: IQuery): Promise<Array<{}>> {
       if (q instanceof GetFirstUserQuery) {
@@ -30,7 +29,7 @@ describe('QueryDispatcher', () => {
       // tslint:disable-next-line: no-empty
       rs._read = () => {};
 
-      if (query instanceof GetFirstUserQuery) {
+      if (q instanceof GetFirstUserQuery) {
         rs.push({ name: 'houssem' });
       } else {
         rs.push({ name: 'houssem' });
@@ -53,7 +52,7 @@ describe('QueryDispatcher', () => {
   });
 
   it('should dispatch queries correctly', async () => {
-    const iocDispatcher = new InversifyQueryDispatcher(new Container());
+    const iocDispatcher = new IoC.Inversify.InversifyQueryDispatcher(new Container());
 
     const users = await iocDispatcher.dispatch(new GetUsersQuery());
     expect(users.length).toEqual(2);
