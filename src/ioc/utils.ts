@@ -1,5 +1,9 @@
 import { METADATA_KEYS } from './constants';
-import { CommandHandlerMetadata, MessageMetadata, QueryHandlerMetadata } from './types';
+import {
+  CommandHandlerMetadata,
+  MessageMetadata,
+  QueryHandlerMetadata,
+} from './types';
 
 export const getQHMetadata = (): Map<string, QueryHandlerMetadata> =>
   Reflect.getMetadata(METADATA_KEYS.queryHandlers, Reflect) || new Map();
@@ -12,7 +16,9 @@ export const getQueryMetadata = (q: Function): MessageMetadata => {
   if (meta) {
     return meta;
   }
-  throw new Error(`query ${q.name} has no metadata, you may need to add @query decorator`);
+  throw new Error(
+    `query ${q.name} has no metadata, you may need to add @query decorator`,
+  );
 };
 
 export const getCommandMetadata = (c: Function): MessageMetadata => {
@@ -20,13 +26,17 @@ export const getCommandMetadata = (c: Function): MessageMetadata => {
   if (meta) {
     return meta;
   }
-  throw new Error(`command ${c.name} has no metadata, you may need to add @command decorator`);
+  throw new Error(
+    `command ${c.name} has no metadata, you may need to add @command decorator`,
+  );
 };
 
-export const getQueryId = (q: Function): symbol => getQueryMetadata(q).id.valueOf();
+export const getQueryId = (q: Function): symbol =>
+  getQueryMetadata(q).id.valueOf();
 
-export const getCommandId = (c: Function): symbol => getCommandMetadata(c).id.valueOf();
+export const getCommandId = (c: Function): symbol =>
+  getCommandMetadata(c).id.valueOf();
 
-export const getObjectName = (o: any): string => Object.getPrototypeOf(o).constructor.name;
+export const getObjectName = (o: any): string => o.constructor.name;
 
-export const getObjectConstructor = (o: any): Function => Object.getPrototypeOf(o).constructor;
+export const getObjectConstructor = (o: any): Function => o.constructor;
