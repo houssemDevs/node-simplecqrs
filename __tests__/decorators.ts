@@ -6,7 +6,7 @@ import { METADATA_KEYS } from '../src/ioc/constants';
 describe('ioc decorators', () => {
   describe('query', () => {
     it('should define metadata correctly', () => {
-      class UserQuery implements IQuery {}
+      class UserQuery {}
       Reflect.decorate([IoC.query], UserQuery);
 
       const metadata = Reflect.getMetadata(METADATA_KEYS.query, UserQuery);
@@ -18,7 +18,7 @@ describe('ioc decorators', () => {
 
   describe('command', () => {
     it('should define metadata correctly', () => {
-      class UserCommand implements IQuery {}
+      class UserCommand {}
       Reflect.decorate([IoC.command], UserCommand);
 
       const metadata = Reflect.getMetadata(METADATA_KEYS.command, UserCommand);
@@ -34,10 +34,7 @@ describe('ioc decorators', () => {
     Reflect.decorate([IoC.query], UserQuery);
     Reflect.decorate([IoC.queries(UserQuery)], UserQueryHandler);
 
-    const userQueryMetadata = Reflect.getMetadata(
-      METADATA_KEYS.query,
-      UserQuery,
-    );
+    const userQueryMetadata = Reflect.getMetadata(METADATA_KEYS.query, UserQuery);
 
     it('should define metadata correctly', () => {
       const metadata = Reflect.getMetadata(METADATA_KEYS.queries, Reflect);
@@ -51,9 +48,7 @@ describe('ioc decorators', () => {
       Reflect.decorate([IoC.queries(UserQuery)], BetterUserQueryHandler);
 
       const metadata = Reflect.getMetadata(METADATA_KEYS.queries, Reflect);
-      expect(metadata.get(userQueryMetadata.id.valueOf()).handler).toBe(
-        BetterUserQueryHandler,
-      );
+      expect(metadata.get(userQueryMetadata.id.valueOf()).handler).toBe(BetterUserQueryHandler);
     });
   });
 
@@ -63,10 +58,7 @@ describe('ioc decorators', () => {
     Reflect.decorate([IoC.command], UserCommand);
     Reflect.decorate([IoC.commands(UserCommand)], UserCommandHandler);
 
-    const userCommandMetadata = Reflect.getMetadata(
-      METADATA_KEYS.command,
-      UserCommand,
-    );
+    const userCommandMetadata = Reflect.getMetadata(METADATA_KEYS.command, UserCommand);
 
     it('should define metadata correctly', () => {
       const metadata = Reflect.getMetadata(METADATA_KEYS.commands, Reflect);
@@ -80,9 +72,7 @@ describe('ioc decorators', () => {
       Reflect.decorate([IoC.commands(UserCommand)], BetterUserCommandHandler);
 
       const metadata = Reflect.getMetadata(METADATA_KEYS.commands, Reflect);
-      expect(metadata.get(userCommandMetadata.id.valueOf()).handler).toBe(
-        BetterUserCommandHandler,
-      );
+      expect(metadata.get(userCommandMetadata.id.valueOf()).handler).toBe(BetterUserCommandHandler);
     });
   });
 });

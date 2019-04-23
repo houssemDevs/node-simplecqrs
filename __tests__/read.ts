@@ -1,73 +1,51 @@
 import 'reflect-metadata';
 
-import { Readable } from 'stream';
+import { Readable, Transform } from 'stream';
 
-import { Container } from 'inversify';
+import { Container, decorate } from 'inversify';
 
 import { IoC, IQuery, IQueryHandler } from '../src';
 
 import { METADATA_KEYS } from '../src/ioc/constants';
-import { QueriesMetadata } from '../src/ioc/types';
+import { IoCError, QueriesMetadata } from '../src/ioc/types';
 import { getQueryMetadata } from '../src/ioc/utils';
 
-describe('QueryDispatcher', () => {
-  @IoC.query
-  class GetUsersQuery implements IQuery {}
-
-  @IoC.query
-  class GetFirstUserQuery implements IQuery {}
-
-  @IoC.queries(GetUsersQuery, GetFirstUserQuery)
-  class UserQueryHandler implements IQueryHandler<{}> {
-    public get(q: IQuery): Promise<Array<{}>> {
-      if (q instanceof GetFirstUserQuery) {
-        return Promise.resolve([{ name: 'houssem' }]);
-      }
-      return Promise.resolve([{ name: 'houssem' }, { name: 'narimene' }]);
+class GetUsersQuery implements IQuery {}
+class GetFirstUserQuery implements IQuery {}
+class UserQueryHandler implements IQueryHandler<{}> {
+  public get(q: IQuery): Promise<Array<{}>> {
+    if (q instanceof GetFirstUserQuery) {
+      return Promise.resolve([{ name: 'houssem' }]);
     }
-    public getStream(q: IQuery): Readable {
-      const rs = new Readable();
+    return Promise.resolve([{ name: 'houssem' }, { name: 'narimene' }]);
+  }
+  public getStream(q: IQuery): Readable {
+    const rs = new Readable({ objectMode: true });
 
-      // tslint:disable-next-line: no-empty
-      rs._read = () => {};
-
+    // tslint:disable-next-line: no-empty
+    rs._read = () => {};
+    setTimeout(() => {
       if (q instanceof GetFirstUserQuery) {
         rs.push({ name: 'houssem' });
       } else {
         rs.push({ name: 'houssem' });
         rs.push({ name: 'narimene' });
       }
-
       rs.push(null);
-      return rs;
-    }
+    }, 500);
+
+    return rs;
   }
+}
 
-  it('should define metadata correctly', () => {
-    const getUserQueryMeta = getQueryMetadata(GetUsersQuery);
-    expect(getUserQueryMeta).toBeDefined();
-    expect(getUserQueryMeta.id).toBeDefined();
+decorate(IoC.query, GetUsersQuery);
+decorate(IoC.query, GetFirstUserQuery);
+decorate(IoC.queries(GetUsersQuery, GetFirstUserQuery), UserQueryHandler);
 
-    const getFirstUserQueryMeta = getQueryMetadata(GetFirstUserQuery);
-    expect(getFirstUserQueryMeta).toBeDefined();
-    expect(getFirstUserQueryMeta.id).toBeDefined();
-
-    const queriesMetadata: QueriesMetadata = Reflect.getMetadata(
-      METADATA_KEYS.queries,
-      Reflect,
-    );
-    expect(queriesMetadata).toBeDefined();
-    expect(queriesMetadata.get(getUserQueryMeta.id.valueOf())).toBeDefined();
-    expect(
-      queriesMetadata.get(getFirstUserQueryMeta.id.valueOf()),
-    ).toBeDefined();
-  });
+describe('QueryDispatcher', () => {
+  const iocDispatcher = new IoC.Inversify.InversifyQueryDispatcher(new Container());
 
   it('should dispatch queries correctly', async () => {
-    const iocDispatcher = new IoC.Inversify.InversifyQueryDispatcher(
-      new Container(),
-    );
-
     const users = await iocDispatcher.dispatch(new GetUsersQuery());
     expect(users.length).toEqual(2);
     expect(users[0]).toEqual({ name: 'houssem' });
@@ -76,5 +54,40 @@ describe('QueryDispatcher', () => {
     const firstUser = await iocDispatcher.dispatch(new GetFirstUserQuery());
     expect(firstUser.length).toEqual(1);
     expect(firstUser[0]).toEqual({ name: 'houssem' });
+  });
+
+  it('should dispatchStream queries correctly', () => {
+    class ReduceStream extends Transform {
+      constructor(public d: any[] = []) {
+        super({ objectMode: true });
+      }
+      public _transform(data: any, encoding: string, done: any) {
+        this.d.push(data);
+        done();
+      }
+    }
+    return new Promise((res) => {
+      const rs = iocDispatcher.dispatchStream(new GetUsersQuery()).pipe(new ReduceStream());
+      rs.on('data', (d) => d);
+      rs.on('end', () => {
+        expect(rs.d.length).toEqual(2);
+        expect(rs.d[0]).toEqual({ name: 'houssem' });
+        expect(rs.d[1]).toEqual({ name: 'narimene' });
+        res();
+      });
+    });
+  });
+
+  it('should throw if no handler for query is registred', () => {
+    class UnhandledQuery {}
+    decorate(IoC.query, UnhandledQuery);
+
+    expect(() => {
+      iocDispatcher.dispatch(new UnhandledQuery());
+    }).toThrow(IoCError);
+
+    expect(() => {
+      iocDispatcher.dispatchStream(new UnhandledQuery());
+    }).toThrow(IoCError);
   });
 });
