@@ -14,8 +14,13 @@ export class InvesrifyCommandDispatcher implements ICommandDispatcher {
   constructor(private container: Container) {
     const commandsMetadata = getCommandsMetadata();
 
+    const alreadyInjectable: Set<string> = new Set();
+
     commandsMetadata.forEach((cHandlerMetadata, cId) => {
-      decorate(injectable(), cHandlerMetadata.handler);
+      if (!alreadyInjectable.has(cHandlerMetadata.name)) {
+        decorate(injectable(), cHandlerMetadata.handler);
+        alreadyInjectable.add(cHandlerMetadata.name);
+      }
 
       this.container
         .bind(TYPES.commandHandler)

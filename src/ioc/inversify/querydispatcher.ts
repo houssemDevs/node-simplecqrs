@@ -12,8 +12,13 @@ export class InversifyQueryDispatcher implements IQueryDispatcher {
   constructor(private container: Container) {
     const queriesMetadata = getQueriesMetadata();
 
+    const alreadyInjectable = new Set<string>();
+
     queriesMetadata.forEach((qHandlerMetadata, qId) => {
-      decorate(injectable(), qHandlerMetadata.handler);
+      if (!alreadyInjectable.has(qHandlerMetadata.name)) {
+        decorate(injectable(), qHandlerMetadata.handler);
+        alreadyInjectable.add(qHandlerMetadata.name);
+      }
 
       this.container
         .bind(TYPES.queryHandler)
