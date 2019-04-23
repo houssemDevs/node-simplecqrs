@@ -1,15 +1,35 @@
 import { METADATA_KEYS } from './constants';
-import {
-  CommandHandlerMetadata,
-  MessageMetadata,
-  QueryHandlerMetadata,
-} from './types';
+import { CommandsMetadata, MessageMetadata, QueriesMetadata } from './types';
 
-export const getQHMetadata = (): Map<string, QueryHandlerMetadata> =>
-  Reflect.getMetadata(METADATA_KEYS.queryHandlers, Reflect) || new Map();
+export const getQueriesMetadata = (): QueriesMetadata => {
+  const metas: QueriesMetadata = Reflect.getMetadata(
+    METADATA_KEYS.query,
+    Reflect,
+  );
 
-export const getCHMetadata = (): Map<string, CommandHandlerMetadata> =>
-  Reflect.getMetadata(METADATA_KEYS.commandHandlers, Reflect) || new Map();
+  if (metas) {
+    return metas;
+  }
+
+  throw new Error(
+    `no query handler registred to handle dispatched queries, try use @queries decorator`,
+  );
+};
+
+export const getCommandsMetadata = (): CommandsMetadata => {
+  const metas: CommandsMetadata = Reflect.getMetadata(
+    METADATA_KEYS.command,
+    Reflect,
+  );
+
+  if (metas) {
+    return metas;
+  }
+
+  throw new Error(
+    `no command handler registred to handle dispatched commands, try use @commands decorator`,
+  );
+};
 
 export const getQueryMetadata = (q: Function): MessageMetadata => {
   const meta: MessageMetadata = Reflect.getMetadata(METADATA_KEYS.query, q);

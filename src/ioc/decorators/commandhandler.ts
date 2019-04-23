@@ -1,23 +1,23 @@
 import { METADATA_KEYS } from '../constants';
-import { CommandHandlerMetadata } from '../types';
+import { CommandHandlerMetadata, CommandsMetadata } from '../types';
 import { getCommandMetadata } from '../utils';
 
 // tslint:disable-next-line: no-shadowed-variable
-export const commands = (...commands: Function[]): ClassDecorator => (target: Function) => {
+export const commands = (...commands: Function[]): ClassDecorator => (
+  target: Function,
+) => {
   const newMetadata: CommandHandlerMetadata = {
     name: target.name,
     handler: target,
-    commands: commands.map((c) => getCommandMetadata(c)),
   };
 
-  const commandHandlers: Map<string, CommandHandlerMetadata> =
-    Reflect.getMetadata(METADATA_KEYS.commandHandlers, Reflect) || new Map();
+  const commandsMetadata: CommandsMetadata =
+    Reflect.getMetadata(METADATA_KEYS.command, Reflect) || new Map();
 
-  if (commandHandlers.has(target.name)) {
-    throw new Error(`command handler already decorated ${target.name}`);
-  }
+  commands.forEach((c) => {
+    const commandMetadata = getCommandMetadata(c);
+    commandsMetadata.set(commandMetadata.id.valueOf(), newMetadata);
+  });
 
-  commandHandlers.set(target.name, newMetadata);
-
-  Reflect.defineMetadata(METADATA_KEYS.commandHandlers, commandHandlers, Reflect);
+  Reflect.defineMetadata(METADATA_KEYS.command, commandsMetadata, Reflect);
 };

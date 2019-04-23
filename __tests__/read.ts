@@ -6,6 +6,8 @@ import { Container } from 'inversify';
 
 import { IoC, IQuery, IQueryHandler } from '../src';
 
+import { METADATA_KEYS } from '../src/ioc/constants';
+import { QueriesMetadata } from '../src/ioc/types';
 import { getQueryMetadata } from '../src/ioc/utils';
 
 describe('QueryDispatcher', () => {
@@ -49,10 +51,19 @@ describe('QueryDispatcher', () => {
     const getFirstUserQuery = getQueryMetadata(GetFirstUserQuery);
     expect(getFirstUserQuery).toBeDefined();
     expect(getFirstUserQuery.id).toBeDefined();
+
+    const queriesMetadata: QueriesMetadata = Reflect.getMetadata(
+      METADATA_KEYS.query,
+      Reflect,
+    );
+    expect(queriesMetadata).toBeDefined();
+    expect(queriesMetadata.get(getQueryMetadata(GetUsersQuery)).toBeDefined();
   });
 
   it('should dispatch queries correctly', async () => {
-    const iocDispatcher = new IoC.Inversify.InversifyQueryDispatcher(new Container());
+    const iocDispatcher = new IoC.Inversify.InversifyQueryDispatcher(
+      new Container(),
+    );
 
     const users = await iocDispatcher.dispatch(new GetUsersQuery());
     expect(users.length).toEqual(2);

@@ -6,14 +6,16 @@ export interface QueryMetadata extends MessageMetadata {}
 
 export interface CommandMetadata extends MessageMetadata {}
 
+export type QueriesMetadata = Map<symbol, QueryHandlerMetadata>;
+
+export type CommandsMetadata = Map<symbol, CommandHandlerMetadata>;
+
 export interface QueryHandlerMetadata {
   name: string;
-  queries: QueryMetadata[];
   handler: any;
 }
 
 export interface CommandHandlerMetadata {
   name: string;
-  commands: CommandMetadata[];
   handler: any;
 }

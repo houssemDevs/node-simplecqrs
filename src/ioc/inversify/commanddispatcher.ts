@@ -2,23 +2,25 @@ import { Container, decorate, injectable } from 'inversify';
 
 import { ICommand } from '../../command/command';
 import { ICommandDispatcher } from '../../command/commanddispatcher';
-import { getCHMetadata, getCommandId, getObjectConstructor } from '../utils';
+import {
+  getCommandId,
+  getCommandsMetadata,
+  getObjectConstructor,
+} from '../utils';
 import { TYPES } from './constants';
 import { getCHFromContainer } from './utils';
 
 export class InvesrifyCommandDispatcher implements ICommandDispatcher {
   constructor(private container: Container) {
-    const chMetadata = getCHMetadata();
+    const commandsMetadata = getCommandsMetadata();
 
-    chMetadata.forEach((chm) => {
-      decorate(injectable(), chm.handler);
+    commandsMetadata.forEach((cHandlerMetadata, cId) => {
+      decorate(injectable(), cHandlerMetadata.handler);
 
-      chm.commands.forEach((cm) => {
-        this.container
-          .bind(TYPES.commandHandler)
-          .to(chm.handler)
-          .whenTargetNamed(cm.id.valueOf());
-      });
+      this.container
+        .bind(TYPES.commandHandler)
+        .to(cHandlerMetadata.handler)
+        .whenTargetNamed(cId);
     });
   }
 

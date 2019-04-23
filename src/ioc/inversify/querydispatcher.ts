@@ -4,23 +4,21 @@ import { Container, decorate, injectable } from 'inversify';
 
 import { IQuery } from '../../query/query';
 import { IQueryDispatcher } from '../../query/querydispatcher';
-import { getObjectConstructor, getQHMetadata, getQueryId } from '../utils';
+import { getObjectConstructor, getQueriesMetadata, getQueryId } from '../utils';
 import { TYPES } from './constants';
 import { getQHFromContainer } from './utils';
 
 export class InversifyQueryDispatcher implements IQueryDispatcher {
   constructor(private container: Container) {
-    const qhMetadata = getQHMetadata();
+    const queriesMetadata = getQueriesMetadata();
 
-    qhMetadata.forEach((qhm) => {
-      decorate(injectable(), qhm.handler);
+    queriesMetadata.forEach((qHandlerMetadata, qId) => {
+      decorate(injectable(), qHandlerMetadata.handler);
 
-      qhm.queries.forEach((qn) => {
-        this.container
-          .bind(TYPES.queryHandler)
-          .to(qhm.handler)
-          .whenTargetNamed(qn.id.valueOf());
-      });
+      this.container
+        .bind(TYPES.queryHandler)
+        .to(qHandlerMetadata.handler)
+        .whenTargetNamed(qId);
     });
   }
 
