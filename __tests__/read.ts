@@ -48,16 +48,19 @@ describe('QueryDispatcher', () => {
     expect(getUserQueryMeta).toBeDefined();
     expect(getUserQueryMeta.id).toBeDefined();
 
-    const getFirstUserQuery = getQueryMetadata(GetFirstUserQuery);
-    expect(getFirstUserQuery).toBeDefined();
-    expect(getFirstUserQuery.id).toBeDefined();
+    const getFirstUserQueryMeta = getQueryMetadata(GetFirstUserQuery);
+    expect(getFirstUserQueryMeta).toBeDefined();
+    expect(getFirstUserQueryMeta.id).toBeDefined();
 
     const queriesMetadata: QueriesMetadata = Reflect.getMetadata(
-      METADATA_KEYS.query,
+      METADATA_KEYS.queries,
       Reflect,
     );
     expect(queriesMetadata).toBeDefined();
-    expect(queriesMetadata.get(getQueryMetadata(GetUsersQuery)).toBeDefined();
+    expect(queriesMetadata.get(getUserQueryMeta.id.valueOf())).toBeDefined();
+    expect(
+      queriesMetadata.get(getFirstUserQueryMeta.id.valueOf()),
+    ).toBeDefined();
   });
 
   it('should dispatch queries correctly', async () => {
