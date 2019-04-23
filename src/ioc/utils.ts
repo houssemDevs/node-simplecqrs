@@ -3,7 +3,7 @@ import { CommandsMetadata, MessageMetadata, QueriesMetadata } from './types';
 
 export const getQueriesMetadata = (): QueriesMetadata => {
   const metas: QueriesMetadata = Reflect.getMetadata(
-    METADATA_KEYS.query,
+    METADATA_KEYS.queries,
     Reflect,
   );
 
@@ -18,7 +18,7 @@ export const getQueriesMetadata = (): QueriesMetadata => {
 
 export const getCommandsMetadata = (): CommandsMetadata => {
   const metas: CommandsMetadata = Reflect.getMetadata(
-    METADATA_KEYS.command,
+    METADATA_KEYS.commands,
     Reflect,
   );
 
