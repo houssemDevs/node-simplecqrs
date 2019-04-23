@@ -5,3 +5,4 @@ node_modules
 *-lock.json
 .vs
 examples/**/*.js*
+coverage
