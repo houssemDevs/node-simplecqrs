@@ -6,6 +6,8 @@ import {
   getCommandId,
   getCommandMetadata,
   getCommandsMetadata,
+  getObjectConstructor,
+  getObjectName,
   getQueriesMetadata,
   getQueryId,
   getQueryMetadata,
@@ -69,6 +71,32 @@ describe('utils', () => {
       expect(queriesMetadata).toBeDefined();
       expect(queriesMetadata.get(getQueryId(Query))).toBeDefined();
       expect(queriesMetadata.get(getQueryId(Query)).handler).toBe(QueryHandler);
+    });
+  });
+
+  describe('getObjectConstructor', () => {
+    it('should return the instance constructor function', () => {
+      const q = new Query();
+
+      class Qu extends Query {}
+
+      const qu = new Qu();
+
+      expect(getObjectConstructor(q)).toBe(Query);
+      expect(getObjectConstructor(qu)).toBe(Qu);
+    });
+  });
+
+  describe('getObjectName', () => {
+    it('should return the instance constructor function name', () => {
+      const q = new Query();
+
+      class Qu extends Query {}
+
+      const qu = new Qu();
+
+      expect(getObjectName(q)).toBe(Query.name);
+      expect(getObjectName(qu)).toBe(Qu.name);
     });
   });
 });
