@@ -8,11 +8,7 @@ export const getQueriesMetadata = (): QueriesMetadata => {
     return metas;
   }
 
-  throw new IoCError(
-    0,
-    'NOMETA_QS',
-    `no query handler registred to handle dispatched queries, try use @queries decorator`,
-  );
+  throw new IoCError(0, 'NOMETA_QS', `no query handler registred to handle dispatched queries, try use @queries decorator`);
 };
 
 export const getCommandsMetadata = (): CommandsMetadata => {
@@ -22,11 +18,7 @@ export const getCommandsMetadata = (): CommandsMetadata => {
     return metas;
   }
 
-  throw new IoCError(
-    0,
-    'NOMETA_CS',
-    `no command handler registred to handle dispatched commands, try use @commands decorator`,
-  );
+  throw new IoCError(0, 'NOMETA_CS', `no command handler registred to handle dispatched commands, try use @commands decorator`);
 };
 
 export const getQueryMetadata = (q: Function): MessageMetadata => {

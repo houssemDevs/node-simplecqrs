@@ -7,9 +7,7 @@ import { getCommandMetadata } from '../utils';
  * @param commands commands that are handled with the decorated handler
  */
 // tslint:disable-next-line: no-shadowed-variable
-export const commands = (...commands: Function[]): ClassDecorator => (
-  target: Function,
-) => {
+export const commands = (...commands: Function[]): ClassDecorator => (target: Function) => {
   // new command handler metadata.
   const newMetadata: CommandHandlerMetadata = {
     name: target.name,
@@ -17,13 +15,12 @@ export const commands = (...commands: Function[]): ClassDecorator => (
   };
 
   // get the metadata for commands already registred if any.
-  const commandsMetadata: CommandsMetadata =
-    Reflect.getMetadata(METADATA_KEYS.commands, Reflect) || new Map();
+  const commandsMetadata: CommandsMetadata = Reflect.getMetadata(METADATA_KEYS.commands, Reflect) || new Map();
 
   // setup the command handler for the commands
   // replace old command handler if any.
   // the last command handler win.
-  commands.forEach((c) => {
+  commands.forEach(c => {
     const commandMetadata = getCommandMetadata(c);
     commandsMetadata.set(commandMetadata.id.valueOf(), newMetadata);
   });

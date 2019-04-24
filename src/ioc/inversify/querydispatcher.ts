@@ -28,10 +28,7 @@ export class InversifyQueryDispatcher implements IQueryDispatcher {
   }
 
   public dispatch<TEntity>(q: IQuery): Promise<TEntity[]> {
-    const h = getQHFromContainer<TEntity>(
-      this.container,
-      getQueryId(getObjectConstructor(q)),
-    );
+    const h = getQHFromContainer<TEntity>(this.container, getQueryId(getObjectConstructor(q)));
 
     if (h) {
       return h.get(q);
@@ -41,10 +38,7 @@ export class InversifyQueryDispatcher implements IQueryDispatcher {
   }
 
   public dispatchStream<TEntity>(q: IQuery): Readable {
-    const h = getQHFromContainer<TEntity>(
-      this.container,
-      getQueryId(getObjectConstructor(q)),
-    );
+    const h = getQHFromContainer<TEntity>(this.container, getQueryId(getObjectConstructor(q)));
 
     if (h) {
       return h.getStream(q);

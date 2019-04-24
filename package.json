@@ -14,7 +14,9 @@
     "dev": "npx tsc --watch",
     "preversion": "npm run build && npm test",
     "postversion": "git push && git push --tags",
-    "staged": "npx lint-staged"
+    "staged": "npx lint-staged",
+    "lint": "npx tslint --config tslint.json --fix --project tsconfig.json",
+    "format": "npx prettier --write --config prettier.config.js src/**/*.ts"
   },
   "repository": {
     "type": "git",
