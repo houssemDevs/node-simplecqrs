@@ -1,6 +1,6 @@
 {
   "defaultSeverity": "error",
-  "extends": ["tslint:recommended"],
+  "extends": ["tslint:recommended","tslint-config-prettier"],
   "jsRules": {},
   "rules": {
     "quotemark": false,
@@ -8,7 +8,8 @@
     "ban-types": false,
     "object-literal-sort-keys": false,
     "interface-name": false,
-    "max-classes-per-file": [true, 10]
+    "max-classes-per-file": [true, 10],
+    "variable-name": [true, "allow-leading-underscore"],
   },
   "rulesDirectory": []
 }

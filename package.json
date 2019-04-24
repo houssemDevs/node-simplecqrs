@@ -6,9 +6,11 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "npx jest",
+    "cov": "npx jest --coverage",
     "prebuild": "npm run clean",
     "build": "npx tsc",
-    "clean": "rimraf -G ./lib",
+    "clean": "npx rimraf -G ./lib",
+    "predev": "npm run clean",
     "dev": "npx tsc --watch",
     "preversion": "npm run build && npm test",
     "postversion": "git push && git push --tags",
@@ -45,6 +47,7 @@
     "rimraf": "^2.6.3",
     "ts-jest": "^24.0.2",
     "tslint": "^5.15.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.1"
   },
   "pre-commit": [
