@@ -12,7 +12,6 @@
     "dev": "npx tsc --watch",
     "preversion": "npm run build && npm test",
     "postversion": "git push && git push --tags",
-    "prepare": "npm run build",
     "staged": "npx lint-staged"
   },
   "repository": {
