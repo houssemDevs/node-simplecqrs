@@ -4,15 +4,9 @@ import { Container } from 'inversify';
 import { Readable } from 'stream';
 import { Ioc, IQuery, IQueryHandler } from '../lib/index';
 
-@Ioc.query
-@Ioc.query
-@Ioc.query
 class GetUser implements IQuery {}
-
-@Ioc.query
 class FetchUser implements IQuery {}
 
-@Ioc.queries(GetUser)
 class UserHandler implements IQueryHandler<{}> {
   public get(q: IQuery): Promise<Array<{}>> {
     return Promise.resolve([{ id: 1 }, { id: 2 }]);
@@ -28,7 +22,6 @@ class UserHandler implements IQueryHandler<{}> {
   }
 }
 
-@Ioc.queries(GetUser)
 class UserHandlerWinner implements IQueryHandler<{}> {
   public get(q: IQuery): Promise<Array<{}>> {
     return Promise.resolve([{ id: 3 }, { id: 4 }]);
@@ -44,10 +37,14 @@ class UserHandlerWinner implements IQueryHandler<{}> {
   }
 }
 
+Reflect.decorate([Ioc.query], GetUser);
+Reflect.decorate([Ioc.query], FetchUser);
+Reflect.decorate([Ioc.queries(GetUser)], UserHandler);
+Reflect.decorate([Ioc.queries(GetUser)], UserHandlerWinner);
+
 const dispatcher = new Ioc.Inversify.InversifyQueryDispatcher(new Container());
 
 (async () => {
-  const result = await dispatcher.dispatch(new FetchUser());
+  let result = await dispatcher.dispatch(new FetchUser());
   result = await dispatcher.dispatch(new GetUser());
-  console.log(result);
 })();
