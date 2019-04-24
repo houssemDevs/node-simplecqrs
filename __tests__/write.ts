@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { Container, decorate } from 'inversify';
 
-import { ICommand, ICommandHandler, IoC } from '../src';
+import { ICommand, ICommandHandler, Ioc } from '../src';
 
 class CreateUserCommand {}
 
@@ -19,13 +19,15 @@ class CommandHandler implements ICommandHandler {
   }
 }
 
-decorate(IoC.command, CreateUserCommand);
-decorate(IoC.command, DeleteUserCommand);
-decorate(IoC.commands(CreateUserCommand, DeleteUserCommand), CommandHandler);
+decorate(Ioc.command, CreateUserCommand);
+decorate(Ioc.command, DeleteUserCommand);
+decorate(Ioc.commands(CreateUserCommand, DeleteUserCommand), CommandHandler);
 
 describe('CommandDispatcher', () => {
   describe('dispatching', () => {
-    const iocDispatcher = new IoC.Inversify.InvesrifyCommandDispatcher(new Container());
+    const iocDispatcher = new Ioc.Inversify.InvesrifyCommandDispatcher(
+      new Container(),
+    );
 
     it('should dispatch commands correctly', async () => {
       const isCreated = await iocDispatcher.dispatch(new CreateUserCommand());
