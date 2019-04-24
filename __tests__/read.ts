@@ -43,7 +43,9 @@ decorate(Ioc.query, GetFirstUserQuery);
 decorate(Ioc.queries(GetUsersQuery, GetFirstUserQuery), UserQueryHandler);
 
 describe('QueryDispatcher', () => {
-  const iocDispatcher = new Ioc.Inversify.InversifyQueryDispatcher(new Container());
+  const iocDispatcher = new Ioc.Inversify.InversifyQueryDispatcher(
+    new Container(),
+  );
 
   it('should dispatch queries correctly', async () => {
     const users = await iocDispatcher.dispatch(new GetUsersQuery());
@@ -67,7 +69,9 @@ describe('QueryDispatcher', () => {
       }
     }
     return new Promise((res) => {
-      const rs = iocDispatcher.dispatchStream(new GetUsersQuery()).pipe(new ReduceStream());
+      const rs = iocDispatcher
+        .dispatchStream(new GetUsersQuery())
+        .pipe(new ReduceStream());
       rs.on('data', (d) => d);
       rs.on('end', () => {
         expect(rs.d.length).toEqual(2);
