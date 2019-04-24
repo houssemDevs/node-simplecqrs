@@ -4,7 +4,7 @@ import { Readable, Transform } from 'stream';
 
 import { Container, decorate } from 'inversify';
 
-import { IoC, IQuery, IQueryHandler } from '../src';
+import { Ioc, IQuery, IQueryHandler } from '../src';
 
 import { METADATA_KEYS } from '../src/ioc/constants';
 import { IoCError, QueriesMetadata } from '../src/ioc/types';
@@ -38,12 +38,12 @@ class UserQueryHandler implements IQueryHandler<{}> {
   }
 }
 
-decorate(IoC.query, GetUsersQuery);
-decorate(IoC.query, GetFirstUserQuery);
-decorate(IoC.queries(GetUsersQuery, GetFirstUserQuery), UserQueryHandler);
+decorate(Ioc.query, GetUsersQuery);
+decorate(Ioc.query, GetFirstUserQuery);
+decorate(Ioc.queries(GetUsersQuery, GetFirstUserQuery), UserQueryHandler);
 
 describe('QueryDispatcher', () => {
-  const iocDispatcher = new IoC.Inversify.InversifyQueryDispatcher(new Container());
+  const iocDispatcher = new Ioc.Inversify.InversifyQueryDispatcher(new Container());
 
   it('should dispatch queries correctly', async () => {
     const users = await iocDispatcher.dispatch(new GetUsersQuery());
@@ -80,7 +80,7 @@ describe('QueryDispatcher', () => {
 
   it('should throw if no handler for query is registred', () => {
     class UnhandledQuery {}
-    decorate(IoC.query, UnhandledQuery);
+    decorate(Ioc.query, UnhandledQuery);
 
     expect(() => {
       iocDispatcher.dispatch(new UnhandledQuery());
