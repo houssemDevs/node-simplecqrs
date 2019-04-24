@@ -20,6 +20,7 @@
     "moduleResolution": "node",
     "diagnostics": true,
     "emitBOM": true,
-    "pretty": true
+    "pretty": true,
+    "types": ["node", "jest", "reflect-metadata", "inversify"]
   }
 }
