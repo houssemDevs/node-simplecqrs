@@ -43,9 +43,7 @@ decorate(Ioc.query, GetFirstUserQuery);
 decorate(Ioc.queries(GetUsersQuery, GetFirstUserQuery), UserQueryHandler);
 
 describe('QueryDispatcher', () => {
-  const iocDispatcher = new Ioc.Inversify.InversifyQueryDispatcher(
-    new Container(),
-  );
+  const iocDispatcher = new Ioc.Inversify.InversifyQueryDispatcher(new Container());
 
   it('should dispatch queries correctly', async () => {
     const users = await iocDispatcher.dispatch(new GetUsersQuery());
@@ -68,11 +66,9 @@ describe('QueryDispatcher', () => {
         done();
       }
     }
-    return new Promise((res) => {
-      const rs = iocDispatcher
-        .dispatchStream(new GetUsersQuery())
-        .pipe(new ReduceStream());
-      rs.on('data', (d) => d);
+    return new Promise(res => {
+      const rs = iocDispatcher.dispatchStream(new GetUsersQuery()).pipe(new ReduceStream());
+      rs.on('data', d => d);
       rs.on('end', () => {
         expect(rs.d.length).toEqual(2);
         expect(rs.d[0]).toEqual({ name: 'houssem' });
@@ -82,7 +78,7 @@ describe('QueryDispatcher', () => {
     });
   });
 
-  it('should throw if no handler for query is registred', () => {
+  it('should throw when dispatching unhandled query', () => {
     class UnhandledQuery {}
     decorate(Ioc.query, UnhandledQuery);
 

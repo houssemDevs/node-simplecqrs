@@ -24,21 +24,17 @@ decorate(Ioc.command, DeleteUserCommand);
 decorate(Ioc.commands(CreateUserCommand, DeleteUserCommand), CommandHandler);
 
 describe('CommandDispatcher', () => {
-  describe('dispatching', () => {
-    const iocDispatcher = new Ioc.Inversify.InvesrifyCommandDispatcher(
-      new Container(),
-    );
+  const iocDispatcher = new Ioc.Inversify.InvesrifyCommandDispatcher(new Container());
 
-    it('should dispatch commands correctly', async () => {
-      const isCreated = await iocDispatcher.dispatch(new CreateUserCommand());
-      expect(isCreated).toBeTruthy();
+  it('should dispatch commands correctly', async () => {
+    const isCreated = await iocDispatcher.dispatch(new CreateUserCommand());
+    expect(isCreated).toBeTruthy();
 
-      const isDeleted = await iocDispatcher.dispatch(new DeleteUserCommand());
-      expect(isDeleted).toBeFalsy();
-    });
+    const isDeleted = await iocDispatcher.dispatch(new DeleteUserCommand());
+    expect(isDeleted).toBeFalsy();
+  });
 
-    it('should throw when dispatching unhandled command', () => {
-      expect(() => iocDispatcher.dispatch(new UpdateUserCommand())).toThrow();
-    });
+  it('should throw when dispatching unhandled command', () => {
+    expect(() => iocDispatcher.dispatch(new UpdateUserCommand())).toThrow();
   });
 });
