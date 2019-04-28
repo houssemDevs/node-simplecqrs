@@ -21,7 +21,7 @@ export class InversifyQueryDispatcher implements IQueryDispatcher {
       }
 
       this.container
-        .bind(TYPES.queryHandler)
+        .bind(TYPES.QUERY_HANDLER)
         .to(qHandlerMetadata.handler)
         .whenTargetNamed(qId);
     });

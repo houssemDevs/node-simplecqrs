@@ -1,4 +1,4 @@
 export const TYPES = {
-  queryHandler: Symbol('queryHandler'),
-  commandHandler: Symbol('commandHandler'),
+  QUERY_HANDLER: Symbol('queryHandler'),
+  COMMAND_HANDLER: Symbol('commandHandler'),
 };

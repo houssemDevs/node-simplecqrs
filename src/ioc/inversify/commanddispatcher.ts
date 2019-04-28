@@ -19,7 +19,7 @@ export class InvesrifyCommandDispatcher implements ICommandDispatcher {
       }
 
       this.container
-        .bind(TYPES.commandHandler)
+        .bind(TYPES.COMMAND_HANDLER)
         .to(cHandlerMetadata.handler)
         .whenTargetNamed(cId);
     });

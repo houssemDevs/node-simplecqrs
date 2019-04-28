@@ -7,7 +7,7 @@ import { TYPES } from './constants';
 
 export const getQHFromContainer = <T>(container: Container, name: Symbol): IQueryHandler<T> => {
   try {
-    return container.getNamed(TYPES.queryHandler, name.valueOf());
+    return container.getNamed(TYPES.QUERY_HANDLER, name.valueOf());
   } catch (err) {
     throw new IoCError(1, 'NOCONT_QH', err.message);
   }
@@ -15,7 +15,7 @@ export const getQHFromContainer = <T>(container: Container, name: Symbol): IQuer
 
 export const getCHFromContainer = (container: Container, name: Symbol): ICommandHandler => {
   try {
-    return container.getNamed(TYPES.commandHandler, name.valueOf());
+    return container.getNamed(TYPES.COMMAND_HANDLER, name.valueOf());
   } catch (err) {
     throw new IoCError(1, 'NOCONT_CH', err.message);
   }
